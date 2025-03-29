@@ -104,6 +104,7 @@
         let rowSumCells = [];
         let colSumCells = [];
         let dragged;
+        let touchStartX, touchStartY;
 
         for (let i = 0; i < 3; i++) {
             let row = document.createElement("tr");
@@ -118,6 +119,9 @@
                 input.ondragstart = handleDragStart;
                 input.ondragover = handleDragOver;
                 input.ondrop = handleDrop;
+                input.addEventListener("touchstart", handleTouchStart);
+                input.addEventListener("touchmove", handleTouchMove);
+                input.addEventListener("touchend", handleTouchEnd);
                 inputs[i][j] = input;
                 cell.appendChild(input);
                 row.appendChild(cell);
@@ -158,6 +162,31 @@
                 let temp = dragged.value;
                 dragged.value = e.target.value;
                 e.target.value = temp;
+                calculateSums();
+            }
+        }
+
+        function handleTouchStart(e) {
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            dragged = e.target;
+        }
+
+        function handleTouchMove(e) {
+            e.preventDefault();
+        }
+
+        function handleTouchEnd(e) {
+            const touch = e.changedTouches[0];
+            const touchEndX = touch.clientX;
+            const touchEndY = touch.clientY;
+            const target = document.elementFromPoint(touchEndX, touchEndY);
+            
+            if (target && target.tagName === 'INPUT') {
+                let temp = dragged.value;
+                dragged.value = target.value;
+                target.value = temp;
                 calculateSums();
             }
         }
