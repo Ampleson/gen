@@ -4,18 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stat Block Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #2b2b2b;
             color: #e0e0e0;
-            font-family: 'Cinzel', serif;
+            font-family: 'Arial', sans-serif;
             font-size: 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
             margin: 0;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #3c3c3c;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
         }
 
         .container {
@@ -25,12 +33,23 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             border: 2px solid #6a4f4b;
+            margin: 20px;
         }
 
-        h2 {
-            margin-bottom: 20px;
-            font-size: 30px;
+        .title-input {
+            background-color: #4b4b4b;
             color: #d4af37;
+            border: none;
+            border-bottom: 2px solid #d4af37;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            outline: none;
+            width: auto;
+            min-width: 200px;
         }
 
         table {
@@ -48,7 +67,7 @@
             font-size: 20px;
             box-sizing: border-box;
             border-radius: 5px;
-            font-family: 'Cinzel', serif;
+            font-family: 'Arial', sans-serif;
         }
 
         input {
@@ -71,9 +90,9 @@
 
         button {
             display: inline-block;
-            margin: 20px 10px;
-            padding: 15px 30px;
-            font-size: 20px;
+            margin: 16px 8px;
+            padding: 12px 24px;
+            font-size: 16px;
             background-color: #d4af37;
             color: #2b2b2b;
             border: none;
@@ -81,74 +100,237 @@
             cursor: pointer;
             transition: background-color 0.3s;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            font-family: 'Cinzel', serif;
+            font-family: 'Arial', sans-serif;
         }
 
         button:hover {
             background-color: #b89e30;
         }
+
+        .dropdown {
+            background-color: #d4af37;
+            color: #2b2b2b;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .small-button {
+            display: inline-block;
+            margin: 16px 8px;
+            padding: 4px 8px;
+            font-size: 16px;
+            background-color: #d4af37;
+            color: #2b2b2b;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .small-button:hover {
+            background-color: #b89e30;
+        }
+
+        .high-contrast {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .high-contrast .container {
+            background-color: #1a1a1a;
+            border-color: #fff;
+        }
+
+        .high-contrast .title-input {
+            background-color: #333;
+            color: #fff;
+            border-bottom-color: #fff;
+        }
+
+        .high-contrast table {
+            border-color: #fff;
+        }
+
+        .high-contrast td, .high-contrast th, .high-contrast input, .high-contrast .row-sum, .high-contrast .col-sum, .high-contrast .total-sum {
+            border-color: #fff;
+            background-color: #444;
+            color: #fff;
+        }
+
+        .high-contrast td:hover, .high-contrast th:hover, .high-contrast input:hover {
+            background-color: #555;
+        }
+
+        .high-contrast button {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .high-contrast .small-button {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .high-contrast .row-sum, .high-contrast .col-sum {
+            background-color: #666;
+            color: #fff;
+        }
+
+        .high-contrast .total-sum {
+            background-color: #777;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Stat Block Generator</h2>
-        <table>
-            <tbody id="grid"></tbody>
-        </table>
-        <button onclick="generateGrid()">Generate</button>
-        <button onclick="resetGrid()">Reset</button>
+    <div class="navbar">
+        <label for="instance-select">Select Instances: </label>
+        <select id="instance-select" class="dropdown" onchange="createInstances()">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+        </select>
     </div>
+    <div id="instances-container"></div>
     <script>
-        const grid = document.getElementById("grid");
-        let inputs = [];
-        let rowSumCells = [];
-        let colSumCells = [];
-        let dragged;
-        let touchStartX, touchStartY;
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("instance-select").value = "1";
+            createInstances();
+        });
 
-        for (let i = 0; i < 3; i++) {
-            let row = document.createElement("tr");
-            inputs[i] = [];
-            for (let j = 0; j < 3; j++) {
-                let cell = document.createElement("td");
-                let input = document.createElement("input");
-                input.type = "number";
-                input.value = "0";
-                input.oninput = calculateSums;
-                input.draggable = true;
-                input.ondragstart = handleDragStart;
-                input.ondragover = handleDragOver;
-                input.ondrop = handleDrop;
-                input.addEventListener("touchstart", handleTouchStart);
-                input.addEventListener("touchmove", handleTouchMove);
-                input.addEventListener("touchend", handleTouchEnd);
-                inputs[i][j] = input;
-                cell.appendChild(input);
-                row.appendChild(cell);
+        function createInstances() {
+            const instancesContainer = document.getElementById("instances-container");
+            const instanceSelect = document.getElementById("instance-select");
+            const numInstances = parseInt(instanceSelect.value);
+
+            const currentInstances = Array.from(instancesContainer.children).map(container => ({
+                title: container.querySelector('.title-input').value,
+                grid: Array.from(container.querySelectorAll('.grid input')).map(input => input.value),
+                highContrast: container.classList.contains('high-contrast')
+            }));
+
+            instancesContainer.innerHTML = '';
+
+            for (let i = 0; i < numInstances; i++) {
+                const container = document.createElement("div");
+                container.className = "container";
+                container.innerHTML = `
+                    <input type="text" class="title-input" value="Stat Block Generator" oninput="updateTitle(this)">
+                    <table>
+                        <tbody class="grid"></tbody>
+                    </table>
+                    <button onclick="populateGrid(this)">Generate</button>
+                    <button class="small-button" onclick="toggleHighContrast(this)">T</button>
+                    <button onclick="resetGrid(this)">Reset</button>
+                `;
+                instancesContainer.appendChild(container);
+                generateGrid(container);
+
+                if (currentInstances[i]) {
+                    container.querySelector('.title-input').value = currentInstances[i].title;
+                    container.classList.toggle('high-contrast', currentInstances[i].highContrast);
+                    currentInstances[i].grid.forEach((value, index) => {
+                        container.querySelectorAll('.grid input')[index].value = value;
+                    });
+                    calculateSums(container);
+                }
             }
-            let rowSumCell = document.createElement("td");
-            rowSumCell.className = "row-sum";
-            rowSumCell.textContent = "0";
-            row.appendChild(rowSumCell);
-            rowSumCells.push(rowSumCell);
-            grid.appendChild(row);
         }
 
-        let colSumRow = document.createElement("tr");
-        for (let j = 0; j < 3; j++) {
-            let colSumCell = document.createElement("td");
-            colSumCell.className = "col-sum";
-            colSumCell.textContent = "0";
-            colSumCells.push(colSumCell);
-            colSumRow.appendChild(colSumCell);
+        function updateTitle(input) {
+            const container = input.closest('.container');
+            const title = container.querySelector('.title-input');
+            title.style.width = input.value.length + 'ch';
         }
-        let totalSumCell = document.createElement("td");
-        totalSumCell.className = "total-sum";
-        totalSumCell.textContent = "0";
-        colSumRow.appendChild(totalSumCell);
-        grid.appendChild(colSumRow);
+
+        function generateGrid(container) {
+            const grid = container.querySelector(".grid");
+            grid.innerHTML = '';
+            let inputs = [];
+            let rowSumCells = [];
+            let colSumCells = [];
+
+            for (let i = 0; i < 3; i++) {
+                let row = document.createElement("tr");
+                inputs[i] = [];
+                for (let j = 0; j < 3; j++) {
+                    let cell = document.createElement("td");
+                    let input = document.createElement("input");
+                    input.type = "number";
+                    input.value = 0;
+                    input.oninput = () => calculateSums(container);
+                    input.draggable = true;
+                    input.ondragstart = handleDragStart;
+                    input.ondragover = handleDragOver;
+                    input.ondrop = handleDrop;
+                    inputs[i][j] = input;
+                    cell.appendChild(input);
+                    row.appendChild(cell);
+                }
+                let rowSumCell = document.createElement("td");
+                rowSumCell.className = "row-sum";
+                rowSumCell.textContent = "0";
+                row.appendChild(rowSumCell);
+                rowSumCells.push(rowSumCell);
+                grid.appendChild(row);
+            }
+
+            let colSumRow = document.createElement("tr");
+            for (let j = 0; j < 3; j++) {
+                let colSumCell = document.createElement("td");
+                colSumCell.className = "col-sum";
+                colSumCell.textContent = "0";
+                colSumCells.push(colSumCell);
+                colSumRow.appendChild(colSumCell);
+            }
+            let totalSumCell = document.createElement("td");
+            totalSumCell.className = "total-sum";
+            totalSumCell.textContent = "0";
+            colSumRow.appendChild(totalSumCell);
+            grid.appendChild(colSumRow);
+
+            container.inputs = inputs;
+            container.rowSumCells = rowSumCells;
+            container.colSumCells = colSumCells;
+            container.totalSumCell = totalSumCell;
+            calculateSums(container);
+        }
+
+        function populateGrid(button) {
+            const container = button.closest('.container');
+            const inputs = container.querySelectorAll('.grid input');
+            inputs.forEach(input => {
+                input.value = Math.floor(Math.random() * 5) + 2; // between 2 and 6
+            });
+            calculateSums(container);
+        }
 
         function handleDragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.value);
             dragged = e.target;
         }
 
@@ -162,7 +344,8 @@
                 let temp = dragged.value;
                 dragged.value = e.target.value;
                 e.target.value = temp;
-                calculateSums();
+                const container = e.target.closest('.container');
+                calculateSums(container);
             }
         }
 
@@ -182,18 +365,25 @@
             const touchEndX = touch.clientX;
             const touchEndY = touch.clientY;
             const target = document.elementFromPoint(touchEndX, touchEndY);
-            
+
             if (target && target.tagName === 'INPUT') {
                 let temp = dragged.value;
                 dragged.value = target.value;
                 target.value = temp;
-                calculateSums();
+                const container = target.closest('.container');
+                calculateSums(container);
             }
         }
 
-        function calculateSums() {
+        function calculateSums(container) {
+            let inputs = container.inputs;
+            let rowSumCells = container.rowSumCells;
+            let colSumCells = container.colSumCells;
+            let totalSumCell = container.totalSumCell;
+
             let colSums = [0, 0, 0];
             let totalSum = 0;
+
             for (let i = 0; i < 3; i++) {
                 let rowSum = 0;
                 for (let j = 0; j < 3; j++) {
@@ -204,28 +394,29 @@
                 }
                 rowSumCells[i].textContent = rowSum;
             }
+
             for (let j = 0; j < 3; j++) {
                 colSumCells[j].textContent = colSums[j];
             }
+
             totalSumCell.textContent = totalSum;
         }
 
-        function generateGrid() {
-            for (let i = 0; i < 3; i++) {
-                for (let j = 0; j < 3; j++) {
-                    inputs[i][j].value = Math.floor(Math.random() * 5) + 2;
-                }
-            }
-            calculateSums();
-        }
+        function resetGrid(button) {
+            const container = button.closest('.container');
+            let inputs = container.inputs;
 
-        function resetGrid() {
             for (let i = 0; i < 3; i++) {
                 for (let j = 0; j < 3; j++) {
                     inputs[i][j].value = "0";
                 }
             }
-            calculateSums();
+            calculateSums(container);
+        }
+
+        function toggleHighContrast(button) {
+            const container = button.closest('.container');
+            container.classList.toggle('high-contrast');
         }
     </script>
 </body>
